@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel de Resultados</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <canvas id="chartCanvas" style="width: 10%; max-width: 800px; height: 40px;"></canvas>
+
+    <div class="container">
+        <button id="open-download-sidebar-btn" class="sidebar-toggle-btn" title="Opções de Download">⬇️ Downloads</button>
+        <div class="main-header">
+            <h1>Painel de Resultados</h1>
+        </div>
+        <!-- *** NOVO: Container para Tabela de Informações e Contagem *** -->
+        <div id="info-summary-table-container">
+            <!-- Tabela será inserida aqui via JavaScript -->
+        </div>
+        <!-- *** FIM: Container Tabela *** -->
+
+        <!-- NOVO: Container para os botões de filtro de dimensão -->
+        <div class="filter-buttons-container" id="dimension-filters">
+            <!-- Botões serão inseridos aqui via JavaScript -->
+        </div>
+
+        
+
+        <!-- NOVO: Elemento para exibir o título da dimensão selecionada -->
+        <h2 class="dimension-title-display" id="dimension-title">Todas as Dimensões</h2>
+    
+        <div class="grid-container">
+            <!-- Quadrados 6x2, com tipos diferentes -->
+            <!--
+            <div class="square" data-type="quadro_de_respostas">
+                <div class="square-content">Quadro de Respostas</div>
+                <button class="edit-btn">Editar</button>
+            </div>
+            
+ 
+            <div class="square" data-type="grafico_de_barras">
+                <div class="square-content">Gráfico de Barras</div>
+                <button class="edit-btn">Editar</button>
+            </div>
+
+            <div class="square" data-type="grafico_de_teia">
+                <div class="square-content">Gráfico de Teia</div>
+                <button class="edit-btn">Editar</button>
+            </div>
+            <div class="square" data-type="quadro_de_respostas">
+                <div class="square-content">Quadro de Respostas</div>
+                <button class="edit-btn">Editar</button>
+            </div>
+            <div class="square" data-type="grafico_de_barras">
+                <div class="square-content">Gráfico de Barras</div>
+                <button class="edit-btn">Editar</button>
+            </div>
+            <div class="square" data-type="grafico_de_teia">
+                <div class="square-content">Gráfico de Teia</div>
+                <button class="edit-btn">Editar</button>
+            </div>
+            <div class="square" data-type="quadro_de_respostas">
+                <div class="square-content">Quadro de Respostas</div>
+                <button class="edit-btn">Editar</button>
+            </div>
+            <div class="square" data-type="grafico_de_barras">
+                <div class="square-content">Gráfico de Barras</div>
+                <button class="edit-btn">Editar</button>
+            </div>
+            <div class="square" data-type="grafico_de_teia">
+                <div class="square-content">Gráfico de Teia</div>
+                <button class="edit-btn">Editar</button>
+            </div>
+            <div class="square" data-type="quadro_de_respostas">
+                <div class="square-content">Quadro de Respostas</div>
+                <button class="edit-btn">Editar</button>
+            </div>
+            <div class="square" data-type="grafico_de_barras">
+                <div class="square-content">Gráfico de Barras</div>
+                <button class="edit-btn">Editar</button>
+            </div>
+            <div class="square" data-type="grafico_de_teia">
+                <div class="square-content">Gráfico de Teia</div>
+                <button class="edit-btn">Editar</button>
+            </div>
+        </div>
+        -->
+        <!-- Menu de edição que aparece no meio da tela -->
+        <!--
+        <div class="edit-menu">
+            <h2>Editar Gráfico</h2>
+            <div class="edit-options">
+            </div>
+            <button class="apply-btn">Aplicar</button>
+            <button class="apply-all-btn">Aplicar em Todos</button>
+            <button class="reset-btn">Voltar ao Padrão</button>
+            <button class="close-btn">Fechar</button>
+        </div>
+        -->
+    </div>
+    
+    
+
+    <!-- Sidebar com botões de download -->
+    <div id="download-sidebar" class="sidebar closed">
+        <button id="close-download-sidebar-btn" class="sidebar-close-btn" title="Fechar">×</button>
+        <h2>Opções de Download</h2>
+
+        <button id="download-pdf-all-btn" class="download-btn">Baixar PDF (Todas Dimensões)</button>
+
+        <div class="dimension-input-container">
+            <button id="download-pdf-dim-btn" class="download-btn">Baixar PDF da Dimensão</button>
+            <input type="number" id="download-dimension-input" class="dimension-input" placeholder="Nº da Dimensão (ex: 1)">
+        </div>
+
+        <button id="download-png-btn" class="download-btn">Baixar Imagens PNG</button>
+
+        <button id="download-json-btn" class="download-btn">Baixar Arquivo Único <span class="help-icon" data-help-key="baixarJson"><i class="fas fa-question-circle"></i></span></button>
+        <p class="download-note">O Arquivo Único inclui todas as planilhas e configurações atuais dos gráficos.</p>
+   </div>
+
+    <!-- Link para voltar à página inicial -->
+    <a href="index.html" class="back-btn">Voltar</a>
+
+    <!-- Adicionando jsPDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script> <!-- <<< ADICIONADO html2canvas -->
+    <!-- Biblioteca para manipulação de arquivos Excel e CSV -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="help-tooltips.js"></script>
+    <script src="script.js"></script>
+    <script src="charts-scripts/shared-utils.js"></script>
+    <script src="charts-scripts/perguntas-table.js"></script>
+    <script src="charts-scripts/bar-chart.js"></script>
+    <script src="charts-scripts/radar-chart.js"></script>
+    <script src="charts-scripts/response-table.js"></script>
+    <script src="charts-scripts/main-init.js"></script>
+    <script src="download-handler.js"></script> <!-- <<< ADICIONADO script de download -->
+
+
+    <!-- Rodapé -->   
+    <footer>
+        <p>
+            <strong>Contatos:</strong><br> <!-- Título adicionado -->
+            Responsável pelo desenvolvimento do site: Gabriel de Antonio Mazetto - <a href="mailto:gabrielmazetto123@gmail.com">gabrielmazetto123@gmail.com</a><br>
+            Responsável pelo desenvolvimento dos indicadores: Dra. Maria Paula Pires de Oliveira - <a href="mailto:mariapaulap.oliveira@gmail.com">mariapaulap.oliveira@gmail.com</a>
+        </p>
+    </footer>
+    <!-- Fim Rodapé -->
+
+</body>
+</html>
